@@ -24,5 +24,6 @@ module.exports = {
       WEBGL_RENDERER: JSON.stringify(true),
     }),
     new HtmlWebpackPlugin({ template: "./index.html" }),
+    // new HtmlWebpackPlugin({ template: "./game.html" }),
   ],
 };
