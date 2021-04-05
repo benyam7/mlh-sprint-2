@@ -19,7 +19,8 @@ class LoaderScene extends Phaser.Scene
     preload()
     {
         this.loadTilesets()
-        this.load.tilemapTiledJSON("env", "../game/fp-env.json"); // load tilemap
+        this.load.tilemapTiledJSON("env", "../assets/tilemap.json"); // load tilemap
+
         // physically load assets contained in json map
         for (let i = 0; i < this.tilesets.length; i++) 
         {
@@ -78,7 +79,7 @@ class LoaderScene extends Phaser.Scene
 
     create()
     {
-        // this.scene.start("GameScene", { tilesets: this.tilesets });
+        this.scene.start("GameScene", { tilesets: this.tilesets });
     }
 
     loadTilesets() {
@@ -90,7 +91,7 @@ class LoaderScene extends Phaser.Scene
     let tilesets = json["tilesets"];
     this.tilesets = tilesets.map((item) => {
       return {
-        image: "../game/" + item.image,
+        image: "../assets/" + item.image,
         gid: item.firstgid,
         name: item.name,
       };
