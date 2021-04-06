@@ -8,8 +8,8 @@ var DEBUG = (err) => {
 };
 
 $(() => {
-  gameHeight = Math.floor($(document).height() * .975);
-  gameWidth = Math.floor($(document).width() * .99);
+  gameHeight = Math.floor($(document).height() * 0.975);
+  gameWidth = Math.floor($(document).width() * 0.99);
 
   DEBUG(`game width = ${gameWidth}`);
   DEBUG(`game height = ${gameHeight}`);
@@ -24,7 +24,7 @@ $(() => {
         gravity: { y: 0 },
       },
     },
-    scene: [LoaderScene, GameScene, ],
+    scene: [LoaderScene, MenuScene],
   };
 
   game = new Phaser.Game(config);
