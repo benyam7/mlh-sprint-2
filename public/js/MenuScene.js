@@ -5,6 +5,10 @@ class MenuScene extends Phaser.Scene {
     });
   }
 
+  init(data) {
+    this.tilesets = data.tileset;
+  }
+
   create() {
     const width = this.scale.width;
     const height = this.scale.height;
@@ -66,13 +70,11 @@ class MenuScene extends Phaser.Scene {
     playText.setInteractive();
 
     playText.on("pointerup", () => {
-      // this.scene.start("WaitingScene", { tilesets: this.tilesets });
-      console.log("to the game ");
+      this.scene.start("GameScene", { tilesets: this.tilesets });
     });
   }
 
   update() {
-    // console.log("hello");
     const cam = this.cameras.main;
     const speed = 3;
     cam.scrollX += speed;

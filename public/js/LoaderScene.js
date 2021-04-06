@@ -68,7 +68,7 @@ class LoaderScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.start("MenuScene");
+    this.scene.start("MenuScene", { tileset: this.tilesets });
   }
 
   loadTilesets() {
