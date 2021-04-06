@@ -1,88 +1,77 @@
-class LoaderScene extends Phaser.Scene
-{
+class LoaderScene extends Phaser.Scene {
+  constructor() {
+    super({
+      key: "LoadingScene",
+    });
 
-    constructor()
-    {
-        super({
-            key: "LoadingScene",
-        });
+    // props
+    this.tilesets = 0;
+  }
 
-        // props
-        this.tilesets = 0
+  init() {}
+
+  preload() {
+    this.loadMenuBackground();
+    this.loadTilesets();
+    this.load.tilemapTiledJSON("env", "../assets/tilemap.json"); // load tilemap
+
+    // physically load assets contained in json map
+    for (let i = 0; i < this.tilesets.length; i++) {
+      let obj = this.tilesets[i];
+      this.load.image(obj.name, obj.image);
     }
 
-    init()
-    {
+    var progressBar = this.add.graphics();
+    var progressBox = this.add.graphics();
 
-    }
+    var loadingText = this.make.text({
+      x: gameWidth / 2,
+      y: gameHeight / 2 - 50,
+      text: "Loading...",
+      style: {
+        font: "30px monospace",
+        fill: "#ffffff",
+      },
+    });
 
-    preload()
-    {
-        this.loadTilesets()
-        this.load.tilemapTiledJSON("env", "../assets/tilemap.json"); // load tilemap
+    loadingText.setScale(0.6);
 
-        // physically load assets contained in json map
-        for (let i = 0; i < this.tilesets.length; i++) 
-        {
-            let obj = this.tilesets[i];
-            this.load.image(obj.name, obj.image);
-        }
+    loadingText.setOrigin(0.5, 0.5);
 
+    progressBox.fillStyle(0xffffff, 0.2);
 
-        var progressBar = this.add.graphics();
-        var progressBox = this.add.graphics();
+    let pbSettings = {
+      x: gameWidth / 6,
+      y: gameHeight / 2,
+      width: (4 * gameWidth) / 6,
+      height: 30,
+    };
 
-        var loadingText = this.make.text({
-            x: gameWidth / 2,
-            y: gameHeight / 2 - 50,
-            text: "Loading...",
-            style: {
-                font: "30px monospace",
-                fill: "#ffffff",
-        },
-        });
+    progressBox.fillRect(
+      pbSettings["x"],
+      pbSettings["y"],
+      pbSettings["width"],
+      pbSettings["height"]
+    );
 
-        loadingText.setScale(0.6)
+    this.load.on("progress", function (value) {
+      progressBar.clear();
+      progressBar.fillStyle(0x23aaee, 1);
+      let factor = value == 0 ? 0 : -20;
+      progressBar.fillRect(
+        pbSettings["x"] + 10,
+        pbSettings["y"] + 10,
+        factor + pbSettings["width"] * value,
+        pbSettings["height"] - 20
+      );
+    });
+  }
 
-        loadingText.setOrigin(0.5, 0.5);
+  create() {
+    this.scene.start("MenuScene", { tileset: this.tilesets });
+  }
 
-        progressBox.fillStyle(0xffffff, 0.2);
-
-        let pbSettings = {
-            x: gameWidth / 6,
-            y: gameHeight / 2,
-            width: (4 * gameWidth) / 6,
-            height: 30,
-        };
-        
-        progressBox.fillRect(
-            pbSettings["x"],
-            pbSettings["y"],
-            pbSettings["width"],
-            pbSettings["height"]
-        );
-
-        this.load.on("progress", function (value) {
-            progressBar.clear();
-            progressBar.fillStyle(0x23aaee, 1);
-            let factor = value == 0 ? 0 : -20;
-            progressBar.fillRect(
-                pbSettings["x"] + 10,
-                pbSettings["y"] + 10,
-                factor + pbSettings["width"] * value,
-                pbSettings["height"] - 20
-            );
-        });
-
-
-    }
-
-    create()
-    {
-        this.scene.start("GameScene", { tilesets: this.tilesets });
-    }
-
-    loadTilesets() {
+  loadTilesets() {
     let json = $.ajax({
       url: "../assets/tilemap.json",
       dataType: "json",
@@ -98,4 +87,15 @@ class LoaderScene extends Phaser.Scene
     });
   }
 
+  loadMenuBackground() {
+    this.load.image("sky", "../assets/sky.png");
+    this.load.image("houses", "../assets/houses.png");
+    this.load.image("houses_one", "../assets/housesOne.png");
+    this.load.image("houses_two", "../assets/housesTwo.png");
+    this.load.image("fountain", "../assets/fountain.png");
+    this.load.image("umbrela", "..//assets/umbrela.png");
+    this.load.image("road", "../assets/road.png");
+    this.load.image("play_button", "../assets/play.png");
+    this.load.image("play_text", "../assets/play_text.png");
+  }
 }
