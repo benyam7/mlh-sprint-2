@@ -5,7 +5,7 @@ class GameScene extends Phaser.Scene {
         });
 
         // props
-        this.tilesets = 0
+        this.tilesets = 0;
     }
 
     init(data) {
