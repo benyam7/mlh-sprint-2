@@ -1,33 +1,36 @@
-# MLH Sprint 2
+[![Build Status](https://github.com/benyam7/mlh-sprint-2/actions/workflows/node-js.yml/badge.svg)]
+[![Website shields.io](https://img.shields.io/github/issues/benyam7/mlh-sprint-2?style=flat-square)]
+[![GitHub license](https://img.shields.io/github/license/benyam7/mlh-sprint-2?style=flat-square)](./LICENSE.md)
 
-## Requirements
+# YourData
 
-[Node.js](https://nodejs.org) is required to install dependencies and run
-scripts via `npm`.
+YourData is a 2D game with the purpose of teaching players about the importance of their data, how companies collect them and generate revenues from.
+![YourData image](./yd_ss.png)
 
-## Available Commands
+# Contribution:
 
-| Command         | Description                                                                     |
-| --------------- | ------------------------------------------------------------------------------- |
-| `npm install`   | Install project dependencies                                                    |
-| `npm start`     | Build project and open web server running project                               |
-| `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) |
+We're open to contributions!
 
-## Writing Code
+## Test Locally
 
-After cloning the repo, run `npm install` from your project directory. Then, you
-can start the local development server by running `npm start`.
+- Clone the repository and checkout to the directory by running:
 
-After starting the development server with `npm start`, you can edit any files
-in the `src` folder and webpack will automatically recompile and reload your
-server (available at `http://localhost:8080` by default).
+```sh
+$ git clone https://github.com/benyam7/mlh-sprint-2
 
-## Deploying Code
+$ cd mlh-sprint-2
+```
 
-After you run the `npm run build` command, your code will be built into a single
-bundle located at `dist/bundle.min.js` along with any other assets you project
-depended.
+Make sure you have `npm` and `node` installed.
 
-If you put the contents of the `dist` folder in a publicly-accessible location
-(say something like `http://mycoolserver.com`), you should be able to open
-`http://mycoolserver.com/index.html` and play your game.
+- Install the dependencies by running:
+
+```sh
+$ npm install
+```
+
+- Start the local server:
+
+```sh
+$ npm start
+```
