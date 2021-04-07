@@ -12,6 +12,7 @@ class LoaderScene extends Phaser.Scene {
 
   preload() {
     this.loadMenuBackground();
+    this.loadPlayer();
     this.loadTilesets();
     this.load.tilemapTiledJSON("env", "../assets/tilemap.json"); // load tilemap
 
@@ -97,5 +98,9 @@ class LoaderScene extends Phaser.Scene {
     this.load.image("road", "../assets/road.png");
     this.load.image("play_button", "../assets/play.png");
     this.load.image("play_text", "../assets/play_text.png");
+  }
+
+  loadPlayer() {
+    this.load.image("player", "../assets/animations/run_right_1.png");
   }
 }

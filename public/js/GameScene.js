@@ -1,52 +1,58 @@
 class GameScene extends Phaser.Scene {
-    constructor() {
-        super({
-            key: "GameScene",
-        });
+  constructor() {
+    super({
+      key: "GameScene",
+    });
 
-        // props
-        this.tilesets = 0;
+    // props
+    this.tilesets = 0;
+
+    // player movement
+    this.playerMovement = new PlayerMovement(this);
+  }
+
+  init(data) {
+    this.tilesets = data.tilesets;
+  }
+
+  create() {
+    this.movingBackground();
+    this.getPlayer();
+    // this.setUpMovmentControls();
+    this.playerMovement.setUpMovmentControls();
+  }
+
+  getObjPropertyFromGid(gid, prop) {
+    for (let i = 0; i < this.tilesets.length; i++) {
+      let obj = this.tilesets[i];
+      if (obj.gid == gid) return obj[prop];
     }
+  }
 
-    init(data) {
-        this.tilesets = data.tilesets;
+  movingBackground() {
+    const width = this.scale.width;
+    const height = this.scale.height;
+    const totalWidth = width * 3000;
+
+    const skyBg = this.add
+      .image(width * 0.5, height * 0.5, "sky")
+      .setScrollFactor(0);
+
+    this.cameras.main.setBounds(0, 0, width * 3000, height);
+
+    createAligned(this, totalWidth, "road", 1.25);
+  }
+
+  getPlayer() {
+    this.player = this.add.image(100, 100, "player").setScrollFactor(1.25);
+    this.player.setScale(0.5);
+  }
+
+  update() {
+    if (this.playerMovement.controls.direction === "left") {
+      this.player.setPosition(this.player.x - 5, this.player.y);
+    } else if (this.playerMovement.controls.direction === "right") {
+      this.player.setPosition(this.player.x + 5, this.player.y);
     }
-
-    preload() {
-
-    }
-
-    create() {
-        const map = this.make.tilemap({ key: "env" });
-        const groundLayer = map.addTilesetImage("bg1");
-        let tileLayer = map
-            .createLayer("TileLayer1", [groundLayer,], 0, 0)
-            .setScale(0.5);
-
-        // create objects layer
-
-        this.objLayer = map.getObjectLayer("ObjectLayer1")["objects"];
-        this.objsGroup = this.physics.add.group();
-
-        this.objLayer.forEach((object) => {
-            let name = this.getObjPropertyFromGid(object.gid, "name");
-            let obj = this.objsGroup.create(object.x, object.y, name);
-            obj.name = name;
-            obj.setScale(0.79);
-            obj.enableBody = true;
-            obj.body.immovable = true;
-            obj.setX(Math.round(object.x * 0.5));
-            obj.setY(Math.round(object.y * 0.5));
-
-        });
-
-    }
-
-    getObjPropertyFromGid(gid, prop) {
-        for (let i = 0; i < this.tilesets.length; i++) {
-            let obj = this.tilesets[i];
-            if (obj.gid == gid) return obj[prop];
-        }
-    }
-
+  }
 }
