@@ -101,6 +101,10 @@ class LoaderScene extends Phaser.Scene {
   }
 
   loadPlayer() {
-    this.load.image("player", "../assets/animations/run_right_1.png");
+    // this.load.image("player", "../assets/test.png");
+    this.load.spritesheet("right_anim", "../assets/test_anim.png", {
+      frameWidth: 84,
+      frameHeight: 128,
+    });
   }
 }

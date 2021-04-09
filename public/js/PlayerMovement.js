@@ -45,13 +45,9 @@ class PlayerMovement {
     );
     left.on("down", () => {
       this.holdLeft();
-      console.log(this.controls);
-      console.log("left down");
     });
     left.on("up", () => {
       this.releaseLeft();
-      console.log(this.controls);
-      console.log("left up");
     });
 
     const right = this.scene.input.keyboard.addKey(
@@ -60,14 +56,10 @@ class PlayerMovement {
 
     right.on("down", () => {
       this.holdRight();
-      console.log(this.controls);
-      console.log("right down");
     });
 
     right.on("up", () => {
       this.releaseRight();
-      console.log(this.controls);
-      console.log("right up");
     });
   }
 }
