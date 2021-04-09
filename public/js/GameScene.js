@@ -36,8 +36,9 @@ class GameScene extends Phaser.Scene {
     const height = this.scale.height;
     const totalWidth = width * 2000;
 
-    const skyBg = this.add.image(width * 0.5, height * 0.5, "sky");
-    //   .setScrollFactor(0);
+    const skyBg = this.add
+      .image(width * 0.5, height * 0.5, "sky")
+      .setScrollFactor(0);
 
     createAligned(this, totalWidth, "houses", 0.25);
     createAligned(this, totalWidth, "houses_two", 0.5);
@@ -52,23 +53,25 @@ class GameScene extends Phaser.Scene {
   }
 
   getPlayer() {
-    // this.player = this.add
-    //   .image(this.scale.width / 2, this.scale.height / 2 + 150, "player")
-    //   .setScrollFactor(1.25);
-    // this.player.setScale(0.5);
-    // this.player.setScrollFactor(0);
-    // this.player.setOrigin(0.5, 1);
-
     this.player = this.add
-      .sprite(this.scale.width / 2, this.scale.height / 2 + 250, "right_anim")
+      .sprite(this.scale.width / 2, this.scale.height / 2 + 250, "player_anim")
       .setDepth(1);
     this.player.setScale(0.5);
-    this.player.setScrollFactor(0);
 
     this.anims.create({
       key: "walk_right",
-      frames: this.anims.generateFrameNumbers("right_anim", {
-        frames: [0, 1],
+      frames: this.anims.generateFrameNumbers("player_anim", {
+        frames: [3, 2],
+      }),
+      frameRate: 10,
+      repeat: -1,
+      yoyo: true,
+    });
+
+    this.anims.create({
+      key: "walk_left",
+      frames: this.anims.generateFrameNumbers("player_anim", {
+        frames: [1, 0],
       }),
       frameRate: 10,
       repeat: -1,
@@ -77,20 +80,12 @@ class GameScene extends Phaser.Scene {
   }
 
   update() {
-    const cam = this.cameras.main;
     if (this.playerMovement.controls.direction === "left") {
-      //   this.player.setPosition(this.player.x - 2, this.player.y);
-
       this.player.x -= 2;
-      cam.scrollX -= 3;
-      console.log(cam.scrollX);
+      this.player.play("walk_left");
     } else if (this.playerMovement.controls.direction === "right") {
-      //   this.player.setPosition(this.player.x + 2, this.player.y);
       this.player.x += 2;
-      //   this.player.setVelocityX(1);
-      cam.scrollX += 3;
       this.player.play("walk_right");
-      //   console.log(cam.scrollX);
     }
   }
 }
