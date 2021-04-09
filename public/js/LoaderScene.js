@@ -15,6 +15,8 @@ class LoaderScene extends Phaser.Scene {
     this.loadPlayer();
     this.loadTilesets();
     this.load.tilemapTiledJSON("env", "../assets/tilemap.json"); // load tilemap
+    // loads audio
+    this.load.audio("background_audio", "../assets/audio/simcity.mp3");
 
     // physically load assets contained in json map
     for (let i = 0; i < this.tilesets.length; i++) {
@@ -65,11 +67,16 @@ class LoaderScene extends Phaser.Scene {
         factor + pbSettings["width"] * value,
         pbSettings["height"] - 20
       );
-    });
+    });    
   }
 
   create() {
     this.scene.start("MenuScene", { tileset: this.tilesets });
+    let playMusic = true;
+    let menumusic = this.sound.add("background_audio", { loop: true });
+    if (playMusic) {
+      menumusic.play();
+    }
   }
 
   loadTilesets() {
