@@ -1,6 +1,6 @@
 
 const GamePointers = {
-  panelGids: [1563, 1564, 1565],
+  panelGids: [1563, 1564, 1565, /* social-media-ad-panels */ 1567, 1568, 1569, 1571, 1572, 1573],
   adBoxRefs: {1563: 'laptop', 1564: 'shoes', 1565: 'watch'}
 }
 
@@ -122,10 +122,10 @@ class GameScene extends Phaser.Scene {
 
   update() {
     if (this.playerMovement.controls.direction === "left") {
-      this.player.x -= 4;
+      this.player.x -= 7;
       this.player.play("walk_left");
     } else if (this.playerMovement.controls.direction === "right") {
-      this.player.x += 4;
+      this.player.x += 7;
       this.player.play("walk_right");
     }
   }
@@ -174,7 +174,7 @@ class GameScene extends Phaser.Scene {
 
     visitButton.on('pointerup', ev => {
       // showBox of website
-      showBox(GamePointers.adBoxRefs[gid])
+      showBox(GamePointers.adBoxRefs[gid], 'Cookies have been added to your browser')
     })
   }
 }

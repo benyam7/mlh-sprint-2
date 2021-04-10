@@ -9,8 +9,6 @@
     padding: 5px 0 0 5px;
     border-radius: 5px;
     text-align: left;
-    border-left: 10px groove brown;
-
     animation-name: opa-show;
     animation-duration: 1s;
 }
