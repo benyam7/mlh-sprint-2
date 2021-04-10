@@ -2,7 +2,8 @@
 const GamePointers = {
   panelGids: [1563, 1564, 1565, /* social-media-ad-panels */ 1567, 1568, 1569, 1571, 1572, 1573],
   smAdPanels: [1567, 1568, 1569, 1571, 1572, 1573],
-  adBoxRefs: {1563: 'laptop', 1564: 'shoes', 1565: 'watch'}
+  adBoxRefs: {1563: 'laptop', 1564: 'shoes', 1565: 'watch'},
+  gameChapters: ['I: How Social Media Companies use cookies for targeted advertising', ]
 }
 
 class GameScene extends Phaser.Scene {
@@ -14,6 +15,12 @@ class GameScene extends Phaser.Scene {
     // props
     this.tilesets = 0;
 
+    // Labels
+    this.chapterTitleLabel = null
+
+    // play time
+    this.seconds = 0
+    this.minutes = 0
     // player movement
     this.playerMovement = new PlayerMovement(this);
   }
@@ -23,6 +30,8 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
+
+
     this.movingBackground();
     this.getPlayer();
     // this.setUpMovmentControls();
@@ -58,6 +67,9 @@ class GameScene extends Phaser.Scene {
         }
     });
 
+    // Labels
+    this.renderChapterTitle(GamePointers.gameChapters[0])
+    this.renderPlayTime()
   }
 
   getObjPropertyFromGid(gid, prop) {
@@ -127,6 +139,55 @@ class GameScene extends Phaser.Scene {
     }
   }
 
+
+  renderPlayTime()
+  {
+  let box = this.add.graphics();
+    let settings = {
+      x: 5,
+      y: 45,
+      width: 146,
+      height: 30,
+    };
+    box.fillStyle(0x1d1d1d, 1);
+    box.setScrollFactor(0)
+    this.fillPBox(box, settings)
+    // hard code css ? Totally my thing
+    this.pTimeLabel = this.add.text(10, 50, 'Play Time: 00:00', { fill: 'white', fontSize: '18px', fontWeight: 'bold', fontFamily: 'curisve' });
+    this.pTimeLabel.setScrollFactor(0)
+
+    setInterval(() => {
+      if(this.seconds == 59) this.minutes++
+      this.seconds = this.seconds==59?0:this.seconds+1
+      let preMinZero = this.minutes < 10?'0':''
+      let preSecZero = this.seconds < 10?'0':''
+
+      this.pTimeLabel.setText(`Play Time: ${preMinZero}${this.minutes}:${preSecZero}${this.seconds}`)
+    }, 1000);
+  }
+
+  renderChapterTitle(firstChapter)
+  {
+    let box = this.add.graphics();
+    let settings = {
+      x: 5,
+      y: 5,
+      width: 576,
+      height: 30,
+    };
+    box.fillStyle(0x1d1d1d, 1);
+    box.setScrollFactor(0)
+    this.fillPBox(box, settings)
+    // hard code css ? Totally my thing
+    this.chapterTitleLabel = this.add.text(10, 10, 'Chapter ' + firstChapter, { fill: 'white', fontSize: '18px', fontWeight: 'bold', fontFamily: 'curisve' });
+    this.chapterTitleLabel.setScrollFactor(0)
+  }
+
+  setChapterTitle(chapter)
+  {
+    this.chapterTitleLabel.setText('Chapter ' + chapter)
+  }
+
   createVisitButtons(x, y, gid)
   {
     let isSmAd = GamePointers.smAdPanels.includes(gid) // is it an add board near Social Media Company Building ?
@@ -143,17 +204,7 @@ class GameScene extends Phaser.Scene {
 
     progressBox.fillStyle(0x1d1d1d, 1);
 
-
-    const fillPBox = () => {
-      progressBox.fillRect(
-        pbSettings["x"],
-        pbSettings["y"],
-        pbSettings["width"],
-        pbSettings["height"]
-      );
-    }
-
-    fillPBox()
+    this.fillPBox(progressBox, pbSettings)
 
     let btnX = pbSettings.x + (pbSettings.width / 2)
     let btnY = pbSettings.y + (pbSettings.height / 2)
@@ -168,12 +219,12 @@ class GameScene extends Phaser.Scene {
 
     visitButton.on('pointerover', ev => {
       progressBox.fillStyle(0x2d2d2d, 1);
-      fillPBox()
+      this.fillPBox(progressBox, pbSettings)
     })
 
     visitButton.on('pointerout', ev => {
       progressBox.fillStyle(0x1d1d1d, 1);
-      fillPBox()
+      this.fillPBox(progressBox, pbSettings)
     })
 
     visitButton.on('pointerup', ev => {
@@ -181,4 +232,14 @@ class GameScene extends Phaser.Scene {
       showBox(GamePointers.adBoxRefs[gid], 'Cookies have been added to your browser')
     })
   }
+
+  fillPBox(_progressBox, _pbSettings){
+      _progressBox.fillRect(
+        _pbSettings["x"],
+        _pbSettings["y"],
+        _pbSettings["width"],
+        _pbSettings["height"]
+      );
+    }
+
 }
