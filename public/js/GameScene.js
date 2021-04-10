@@ -1,6 +1,7 @@
 
 const GamePointers = {
   panelGids: [1563, 1564, 1565, /* social-media-ad-panels */ 1567, 1568, 1569, 1571, 1572, 1573],
+  smAdPanels: [1567, 1568, 1569, 1571, 1572, 1573],
   adBoxRefs: {1563: 'laptop', 1564: 'shoes', 1565: 'watch'}
 }
 
@@ -52,13 +53,9 @@ class GameScene extends Phaser.Scene {
         if(GamePointers.panelGids.includes(object.gid)) // add panels here
         {
             this.createVisitButtons(obj.body.x * posScale, obj.body.y * posScale, object.gid)
-        }
+            obj.setScale(0.6)
 
-        if(name.includes('panel'))
-        {
-          obj.setScale(0.6)
         }
-
     });
 
   }
@@ -132,6 +129,9 @@ class GameScene extends Phaser.Scene {
 
   createVisitButtons(x, y, gid)
   {
+    let isSmAd = GamePointers.smAdPanels.includes(gid) // is it an add board near Social Media Company Building ?
+    let upperBtnTxt = isSmAd?'Advertisement':'Visit Website'
+
     let progressBox = this.add.graphics();
 
     let pbSettings = {
@@ -158,8 +158,12 @@ class GameScene extends Phaser.Scene {
     let btnX = pbSettings.x + (pbSettings.width / 2)
     let btnY = pbSettings.y + (pbSettings.height / 2)
 
-    const visitButton = this.add.text(btnX, btnY, 'Visit Website', { fill: '#ffffff', fontSize: '15px', fontWeight: 'bold', fontFamily: 'curisve' });
+    const visitButton = this.add.text(btnX, btnY, upperBtnTxt, { fill: '#ffffff', fontSize: '15px', fontWeight: 'bold', fontFamily: 'curisve' });
     visitButton.setOrigin(0.5, 0.5)
+
+    if(isSmAd) // no need to hover effect and click event
+      return
+
     visitButton.setInteractive({ cursor: 'pointer' });
 
     visitButton.on('pointerover', ev => {
