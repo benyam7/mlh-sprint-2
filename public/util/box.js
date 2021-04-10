@@ -1,5 +1,5 @@
 
-const showBox = (ref ) => {
+const showBox = (ref, notif ) => {
 
     let json = $.ajax({
       url: `../assets/jsons/${ref}.json`,
@@ -14,6 +14,10 @@ const showBox = (ref ) => {
     ${txt}
     </p>  </div>
     <div class="btm-div">
-    <button class="btm-btn" onclick="$(\'.box\').remove();">Continue</button>
+    <script>
+      var notifTxt = '${notif}'
+    </script>
+    <button class="btm-btn" onclick="$(\'.box\').remove(); showNotif(notifTxt)">Continue</button>
     </div> </div>`);    
 }
+

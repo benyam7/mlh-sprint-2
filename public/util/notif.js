@@ -1,9 +1,12 @@
-const showNotif = () => {
+const showNotif = (txt) => {
     $('body').append(`<div class="notif"> 
-        <span> Notif text here </span>
+        <img class="notif-img" src="../img/info.png" />
+        <div class="txt-holder">
+        <span class="notif-txt"> ${txt} </span>
+        </div>
     </div>`);    
 
     setTimeout( () => {
         $('.notif').remove()
-    }, 3000);
+    }, 7000);
 }

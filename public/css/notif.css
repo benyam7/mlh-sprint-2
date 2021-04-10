@@ -2,10 +2,36 @@
     position: absolute;
     bottom: 5%;
     left: 5%;
-    width: 230px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.562);
+    width: 400px;
+    height: 60px;
+    background-color: #cdcdcd;
+    box-shadow: 0 4px 4px 0 brown, 2px 4px 4px 2px brown;
     padding: 5px 0 0 5px;
     border-radius: 5px;
     text-align: left;
+    animation-name: opa-show;
+    animation-duration: 1s;
+}
+
+@keyframes opa-show {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.txt-holder{
+    padding-top: 13px;
+}
+
+.notif-txt{
+    color: #1d1d1d;
+    margin-left: 15px;
+    font-size: 15px;
+}
+
+.notif-img{
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 40px;
+    height: 40px;
+    float: left;
 }
