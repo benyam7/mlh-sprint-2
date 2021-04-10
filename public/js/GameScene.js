@@ -1,7 +1,15 @@
 
 const GamePointers = {
-  panelGids: [1563, 1564, 1565, /* social-media-ad-panels */ 1567, 1568, 1569, 1571, 1572, 1573],
+  panelGids: [1563, 1564, 1565, /* social-media-ad-panels */ 1567, 1568, 1569, 1570, 1571, 1572, 1573],
   smAdPanels: [1567, 1568, 1569, 1571, 1572, 1573],
+
+  shoesAdGids: [1569, 1570, 1571],
+  watchesAdGids: [1572, 1573],
+  laptopsAdGids: [1567, 1568, 1569], 
+
+  shoePanelGid: 1564,
+  laptopPanelGid: 1563,
+  watchPanelGid: 1565,
   adBoxRefs: {1563: 'laptop', 1564: 'shoes', 1565: 'watch'},
   gameChapters: ['I: How Social Media Companies use cookies for targeted advertising', ]
 }
@@ -14,6 +22,7 @@ class GameScene extends Phaser.Scene {
 
     // props
     this.tilesets = 0;
+    this.panels = {}
 
     // Labels
     this.chapterTitleLabel = null
@@ -21,6 +30,7 @@ class GameScene extends Phaser.Scene {
     // play time
     this.seconds = 0
     this.minutes = 0
+
     // player movement
     this.playerMovement = new PlayerMovement(this);
   }
@@ -63,6 +73,12 @@ class GameScene extends Phaser.Scene {
         {
             this.createVisitButtons(obj.body.x * posScale, obj.body.y * posScale, object.gid)
             obj.setScale(0.6)
+
+            if(GamePointers.smAdPanels.includes(object.gid))
+            {
+              this.panels[object.gid] = obj
+              obj.visible = false // shoe them based on visited website
+            }
 
         }
     });
@@ -230,6 +246,25 @@ class GameScene extends Phaser.Scene {
     visitButton.on('pointerup', ev => {
       // showBox of website
       showBox(GamePointers.adBoxRefs[gid], 'Cookies have been added to your browser')
+      switch (gid) {
+        case GamePointers.shoePanelGid:
+          this.panels[GamePointers.shoesAdGids[0]].visible = true
+          this.panels[GamePointers.shoesAdGids[1]].visible = true
+          break;
+
+        case GamePointers.laptopPanelGid:
+          this.panels[GamePointers.laptopsAdGids[0]].visible = true
+          this.panels[GamePointers.laptopAsdGids[1]].visible = true
+          break;
+
+        case GamePointers.watchPanelGid:
+          this.panels[GamePointers.watchesAdGids[0]].visible = true
+          this.panels[GamePointers.watchesAdGids[1]].visible = true
+          break;
+      
+        default:
+          break;
+      }
     })
   }
 
