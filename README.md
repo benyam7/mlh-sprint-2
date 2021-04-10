@@ -2,9 +2,9 @@
 [![Website shields.io](https://img.shields.io/github/issues/benyam7/mlh-sprint-2?style=flat-square)]
 [![GitHub license](https://img.shields.io/github/license/benyam7/mlh-sprint-2?style=flat-square)](./LICENSE.md)
 
-# YourData
+# YourData: The Game
 
-YourData is a 2D game with the purpose of teaching players about the importance of their data, how companies collect them and generate revenues from.
+YourData is a Phaser.js built in 2D game with the purpose of teaching players the importance of personal data, how companies collect them and generate revenues from.
 ![YourData image](./yd_ss.png)
 
 # Contribution:
